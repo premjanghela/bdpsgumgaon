@@ -1,1 +1,119 @@
-hello prem
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protected Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: none;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .coins {
+            margin-right: 20px;
+        }
+        section {
+            padding: 20px;
+            text-align: center;
+        }
+        .add-coin-container {
+            margin-top: 10px;
+            text-align: right;
+        }
+        #codeInput {
+            display: none;
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        function checkPassword() {
+            if (localStorage.getItem("authenticated") === "true") {
+                document.body.style.display = "block";
+                return;
+            }
+
+            var password = prompt("Please enter the password:");
+            if (password === "1234") {
+                localStorage.setItem("authenticated", "true");
+                document.body.style.display = "block";
+            } else {
+                alert("Incorrect password. Please try again.");
+                checkPassword();
+            }
+        }
+
+        function startCoinCountdown() {
+            const startDate = new Date("2024-08-01T00:00:00");
+            const now = new Date();
+            const initialCoins = 1000;
+            let coins = localStorage.getItem("coins");
+
+            if (!coins) {
+                coins = initialCoins;
+                localStorage.setItem("coins", coins);
+            } else {
+                const minutesElapsed = Math.floor((now - startDate) / 60000);
+                coins = Math.max(0, initialCoins - minutesElapsed);
+                localStorage.setItem("coins", coins);
+            }
+
+            document.getElementById("coins").innerText = coins;
+
+            setInterval(() => {
+                coins = Math.max(0, --coins);
+                localStorage.setItem("coins", coins);
+                document.getElementById("coins").innerText = coins;
+            }, 60000);
+        }
+
+        function showInputField() {
+            document.getElementById("codeInput").style.display = "block";
+        }
+
+        function addCoins() {
+            const code = document.getElementById("codeField").value;
+            let coins = parseInt(localStorage.getItem("coins"), 10);
+
+            if (code === "10pj") {
+                coins += 100;
+            } else if (code === "20pj") {
+                coins += 20000;
+            } else {
+                alert("Invalid code");
+                return;
+            }
+
+            localStorage.setItem("coins", coins);
+            document.getElementById("coins").innerText = coins;
+            document.getElementById("codeField").value = '';
+            document.getElementById("codeInput").style.display = "none";
+        }
+    </script>
+</head>
+<body onload="checkPassword(); startCoinCountdown();">
+    <header>
+        <h1>Hello World</h1>
+        <div class="coins">Coins: <span id="coins">1000</span></div>
+    </header>
+    <section>
+        <div class="add-coin-container">
+            <button onclick="showInputField()">Add Coin</button>
+            <div id="codeInput">
+                <input type="text" id="codeField" placeholder="Enter code">
+                <button onclick="addCoins()">Submit</button>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
