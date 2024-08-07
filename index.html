@@ -3,117 +3,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Protected Page</title>
+    <title>Coin Counter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
+    
+    <style>
+    /* CSS for the popup */
+    .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    }
+    /*body style*/ 
+    
+    </style>  
+    <!-- Popup for music option -->
+    <div id="popup" class="popup" style="display:none;">
+    <h3>Welcome </h3>
+    <button id="playMusicBtn">Okay</button>
+    </div>
+    
+    <audio id="bgMusic" loop autoplay>
+    <source src="a.mp3" type="audio/mp3">
+    </audio>
+   
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var audio = document.getElementById('bgMusic');
+    audio.volume = 0.9; // initial volume
+    
+    // Show the popup
+    document.getElementById('popup').style.display = 'block';
+    
+    // Play music when user clicks 'Yes' button
+    document.getElementById('playMusicBtn').addEventListener('click', function() {
+    audio.play();
+    document.getElementById('popup').style.display = 'none'; // hide the popup
+    });
+    
+    // Pause music when leaving the page
+    window.addEventListener('unload', function() {
+    audio.pause();
+    });
+    });
+    </script>
+    
+    
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
-            display: none;
         }
         header {
             background-color: #333;
             color: white;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
         }
-        .coins {
-            margin-right: 20px;
-        }
-        section {
+        main {
             padding: 20px;
             text-align: center;
         }
-        .add-coin-container {
-            margin-top: 10px;
-            text-align: right;
+        form {
+            display: inline-block;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
-        #codeInput {
+        select {
+            padding: 10px;
+            width: 200px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #coinCount {
+            font-size: 24px;
+        }
+        .coin-icon {
+            font-size: 24px;
+            margin-right: 5px;
+        }
+        .modal {
             display: none;
-            margin-top: 10px;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
         }
     </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Management</h1>
+        <p>You have ₹<span id="coinCount"><i class="fas fa-coins coin-icon"></i></span> Rupee</p>
+        <button id="addCoinsButton">Add Rupees</button>
+    </header>
+
+    <main>
+        <form id="coinForm">
+            <label for="actionSelect">Select Action:</label>
+            <br>
+            <select id="actionSelect" name="action">
+                <option value="TeachersAttendance">Teachers Atten... (1.2 coin)</option>
+                <option value="TeacherSalary">Teacher Salary (3.2coins)</option>
+                <option value="example">Visit Example (2 coins)</option>
+            
+            </select>
+            <br>
+            <button type="submit">Go to.....</button>
+        </form>
+    </main>
+
+    <div id="addCoinsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Enter Password</h2>
+            <form id="passwordForm">
+                <input type="password" id="password" name="password" placeholder="Enter password" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script>
-        function checkPassword() {
-            if (localStorage.getItem("authenticated") === "true") {
-                document.body.style.display = "block";
-                return;
-            }
+        // Check if coin count exists in localStorage, if not set it to 20
+        if (!localStorage.getItem('coinCount')) {
+            localStorage.setItem('coinCount', '15');
+        }
 
-            var password = prompt("Please enter the password:");
-            if (password === "1234") {
-                localStorage.setItem("authenticated", "true");
-                document.body.style.display = "block";
+        // Set initial coin count
+        document.getElementById('coinCount').textContent = localStorage.getItem('coinCount');
+
+        document.getElementById("coinForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevents the form from submitting and refreshing the page
+
+            var actionSelect = document.getElementById('actionSelect');
+            var selectedAction = actionSelect.options[actionSelect.selectedIndex].value;
+
+            switch (selectedAction) {
+                case "TeachersAttendance":
+                    redirectToURL("TeachersAttendance.html", 1.2);
+                    break;
+                case "TeacherSalary":
+                    redirectToURL("TeacherSalary", 4);
+                    break;
+                case "example":
+                    redirectToURL("https://www.example.com", 2);
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        // Modal
+        var addCoinsModal = document.getElementById('addCoinsModal');
+        var addCoinsButton = document.getElementById('addCoinsButton');
+        var span = document.getElementsByClassName("close")[0];
+
+        addCoinsButton.onclick = function() {
+            addCoinsModal.style.display = "block";
+        }
+
+        span.onclick = function() {
+            addCoinsModal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == addCoinsModal) {
+                addCoinsModal.style.display = "none";
+            }
+        }
+
+        document.getElementById("passwordForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevents the form from submitting and refreshing the page
+
+            var password = document.getElementById('password').value;
+
+            if (password === '1234') {
+                swal("Password correct!", "You can now add coins.", "success");
+                document.getElementById('password').value = '';
+                document.getElementById('addCoinsModal').style.display = "none";
+                addCoins();
             } else {
-                alert("Incorrect password. Please try again.");
-                checkPassword();
+                swal("Incorrect password!", "Please try again.", "error");
             }
-        }
-
-        function startCoinCountdown() {
-            const startDate = new Date("2024-08-01T00:00:00");
-            const now = new Date();
-            const initialCoins = 1000;
-            let coins = localStorage.getItem("coins");
-
-            if (!coins) {
-                coins = initialCoins;
-                localStorage.setItem("coins", coins);
-            } else {
-                const minutesElapsed = Math.floor((now - startDate) / 60000);
-                coins = Math.max(0, initialCoins - minutesElapsed);
-                localStorage.setItem("coins", coins);
-            }
-
-            document.getElementById("coins").innerText = coins;
-
-            setInterval(() => {
-                coins = Math.max(0, --coins);
-                localStorage.setItem("coins", coins);
-                document.getElementById("coins").innerText = coins;
-            }, 60000);
-        }
-
-        function showInputField() {
-            document.getElementById("codeInput").style.display = "block";
-        }
+        });
 
         function addCoins() {
-            const code = document.getElementById("codeField").value;
-            let coins = parseInt(localStorage.getItem("coins"), 10);
+            var coinAmount = parseInt(prompt("Enter the Rupees to add:"));
+            var currentCoins = parseInt(localStorage.getItem('coinCount'));
 
-            if (code === "10pj") {
-                coins += 100;
-            } else if (code === "20pj") {
-                coins += 20000;
+            if (!isNaN(coinAmount) && coinAmount > 0) {
+                currentCoins += coinAmount;
+                localStorage.setItem('coinCount', currentCoins.toString());
+                document.getElementById('coinCount').textContent = currentCoins;
             } else {
-                alert("Invalid code");
-                return;
+                swal("Invalid input!", "Please enter a valid number.", "error");
             }
+        }
 
-            localStorage.setItem("coins", coins);
-            document.getElementById("coins").innerText = coins;
-            document.getElementById("codeField").value = '';
-            document.getElementById("codeInput").style.display = "none";
+        function redirectToURL(url, coins) {
+            var currentCoins = parseInt(localStorage.getItem('coinCount'));
+            if (currentCoins >= coins) {
+                currentCoins -= coins;
+                localStorage.setItem('coinCount', currentCoins.toString());
+                document.getElementById('coinCount').textContent = currentCoins;
+                window.location.href = url;
+            } else {
+                swal("Not enough coins!", "", "error");
+            }
         }
     </script>
-</head>
-<body onload="checkPassword(); startCoinCountdown();">
-    <header>
-        <h1>Hello World</h1>
-        <div class="coins">Coins: <span id="coins">1000</span></div>
-    </header>
-    <section>
-        <div class="add-coin-container">
-            <button onclick="showInputField()">Add Coin</button>
-            <div id="codeInput">
-                <input type="text" id="codeField" placeholder="Enter code">
-                <button onclick="addCoins()">Submit</button>
-            </div>
-        </div>
-    </section>
 </body>
 </html>

@@ -1,0 +1,51 @@
+TeachersAttendance
+<style>
+  /* CSS for the popup */
+  .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+  }
+ /*body style*/ 
+
+</style>
+</head>
+<body>
+
+<!-- Popup for music option -->
+<div id="popup" class="popup" style="display:none;">
+  <h3 style="color:red;" >Hello Welcome to Your Profile</h3>
+  <button id="playMusicBtn">Okay</button>
+</div>
+
+<audio id="bgMusic" loop autoplay>
+  <source src="b.mp3" type="audio/mp3">
+</audio>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var audio = document.getElementById('bgMusic');
+  audio.volume = 0.9; // initial volume
+
+  // Show the popup
+  document.getElementById('popup').style.display = 'block';
+
+  // Play music when user clicks 'Yes' button
+  document.getElementById('playMusicBtn').addEventListener('click', function() {
+    audio.play();
+    document.getElementById('popup').style.display = 'none'; // hide the popup
+  });
+
+  // Pause music when leaving the page
+  window.addEventListener('unload', function() {
+    audio.pause();
+  });
+});
+</script>

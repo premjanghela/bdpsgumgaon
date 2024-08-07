@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coin Counter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+        form {
+            display: inline-block;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        select {
+            padding: 10px;
+            width: 200px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #coinCount {
+            font-size: 24px;
+        }
+        .coin-icon {
+            font-size: 24px;
+            margin-right: 5px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        #history {
+            margin-top: 20px;
+            text-align: center;
+        }
+        #history table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+        #history th, #history td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #f2f2f2;
+        }
+        #history th {
+            background-color: #333;
+            color: white;
+        }
+        #history tbody tr:hover {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Coin Counter</h1>
+        <p>You have <span id="coinCount"><i class="fas fa-coins coin-icon"></i></span> coins</p>
+        <button id="addCoinsButton">Add Coins</button>
+    </header>
+
+    <main>
+        <form id="coinForm">
+            <label for="actionSelect">Select Action:</label>
+            <br>
+            <select id="actionSelect" name="action">
+                <option value="google">Visit Google (1 coin)</option>
+                <option value="email">Send Email (4 coins)</option>
+                <option value="example">Visit Example (2 coins)</option>
+            </select>
+            <br>
+            <button type="submit">Go</button>
+        </form>
+
+        <div id="history">
+            <h2>History</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Action</th>
+                        <th>Date/Time</th>
+                        <th>Coins Deducted</th>
+                    </tr>
+                </thead>
+                <tbody id="historyList"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <div id="addCoinsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Enter Voucher Code</h2>
+            <form id="voucherForm">
+                <input type="text" id="voucherCode" name="voucherCode" placeholder="Enter voucher code" required>
+                <button type="submit"> Add Coin</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <script>
+        // Check if coin count exists in localStorage, if not set it to 20
+        if (!localStorage.getItem('coinCount')) {
+            localStorage.setItem('coinCount', '10');
+        }
+
+        // Check if history exists in localStorage, if not set it to an empty array
+        if (!localStorage.getItem('history')) {
+            localStorage.setItem('history', JSON.stringify([]));
+        }
+
+        // Check if voucher codes exist in localStorage, if not set them
+        if (!localStorage.getItem('voucherCodes')) {
+            localStorage.setItem('voucherCodes', JSON.stringify(["1234", "12345", "54321", "98765", "56789"]));
+        }
+
+        // Check if password entered flag exists in localStorage
+        if (!localStorage.getItem('passwordEntered')) {
+            promptPassword();
+        }
+
+        // Set initial coin count
+        document.getElementById('coinCount').textContent = localStorage.getItem('coinCount');
+
+        // Display history from local storage
+        displayHistory();
+
+        document.getElementById("coinForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevents the form from submitting and refreshing the page
+
+            var actionSelect = document.getElementById('actionSelect');
+            var selectedAction = actionSelect.options[actionSelect.selectedIndex].value;
+
+            switch (selectedAction) {
+                case "google":
+                    redirectToURL("https://www.google.com", 1);
+                    break;
+                case "email":
+                    redirectToURL("mailto:", 4);
+                    break;
+                case "example":
+                    redirectToURL("https://www.example.com", 2);
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        // Modal
+        var addCoinsModal = document.getElementById('addCoinsModal');
+        var addCoinsButton = document.getElementById('addCoinsButton');
+        var span = document.getElementsByClassName("close")[0];
+
+        addCoinsButton.onclick = function() {
+            addCoinsModal.style.display = "block";
+        }
+
+        span.onclick = function() {
+            addCoinsModal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == addCoinsModal) {
+                addCoinsModal.style.display = "none";
+            }
+        }
+
+        document.getElementById("voucherForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevents the form from submitting and refreshing the page
+
+            var voucherCode = document.getElementById('voucherCode').value;
+
+            redeemVoucher(voucherCode);
+        });
+
+        function redeemVoucher(voucherCode) {
+            var voucherCodes = JSON.parse(localStorage.getItem('voucherCodes'));
+            var index = voucherCodes.indexOf(voucherCode);
+            if (index !== -1) {
+                var coinAmount = 0;
+                switch (voucherCode) {
+                    
+                    case "demo1":
+                         coinAmount = 1;
+                         break;
+                    case "1234":
+                        coinAmount = 10;
+                        break;
+                    case "12345":
+                        coinAmount = 15;
+                        break;
+                    // Add more cases for additional voucher codes here
+                    default:
+                        break;
+                }
+                voucherCodes.splice(index, 1); // Remove the used voucher code
+                localStorage.setItem('voucherCodes', JSON.stringify(voucherCodes));
+
+                var currentCoins = parseInt(localStorage.getItem('coinCount'));
+                currentCoins += coinAmount;
+                localStorage.setItem('coinCount', currentCoins.toString());
+                document.getElementById('coinCount').textContent = currentCoins;
+
+                // Update history
+                updateHistory("Coin Recharge", coinAmount);
+                swal("Your voucher recharge sucsess!", "You received " + coinAmount + " coins.", "success");
+                document.getElementById('voucherCode').value = '';
+                document.getElementById('addCoinsModal').style.display = "none";
+            } else {
+                swal("Invalid voucher code!", "Please try again.", "error");
+            }
+        }
+
+        function redirectToURL(url, coins) {
+            var currentCoins = parseInt(localStorage.getItem('coinCount'));
+            if (currentCoins >= coins) {
+                currentCoins -= coins;
+                localStorage.setItem('coinCount', currentCoins.toString());
+                document.getElementById('coinCount').textContent = currentCoins;
+                window.location.href = url;
+
+                // Update history
+                var action = "";
+                switch (url) {
+                    case "https://www.google.com":
+                        action = "Visited Google";
+                        break;
+                    case "mailto:":
+                        action = "Sent Email";
+                        break;
+                    case "https://www.example.com":
+                        action = "Visited Example";
+                        break;
+                    default:
+                        break;
+                }
+                updateHistory(action, coins);
+            } else {
+                swal("No coins!", "Please Recharge Now", "error");
+            }
+        }
+
+        function updateHistory(action, coins) {
+            var history = JSON.parse(localStorage.getItem('history'));
+            var date = new Date();
+            var dateTime = date.toLocaleString();
+            history.unshift(action + "|" + dateTime + "|" + coins);
+            localStorage.setItem('history', JSON.stringify(history));
+            displayHistory(); // Update displayed history
+        }
+
+        function displayHistory() {
+            var historyList = document.getElementById('historyList');
+            historyList.innerHTML = ''; // Clear existing history
+
+            var history = JSON.parse(localStorage.getItem('history'));
+            if (history) {
+                history.forEach(function(item) {
+                    var parts = item.split('|');
+                    var row = historyList.insertRow(0);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    cell1.textContent = parts[0];
+                    cell2.textContent = parts[1];
+                    cell3.textContent = parts[2];
+                });
+            }
+        }
+
+        function promptPassword() {
+            var password = prompt("Enter the password to access the App:");
+            if (password === '12344321') {
+                localStorage.setItem('passwordEntered', 'true');
+            } else {
+                alert("Incorrect password! Please refresh the page and try again.");
+                window.location.href = "index.html"; // Redirect to a blank page
+            }
+        }
+    </script>
+</body>
+</html>

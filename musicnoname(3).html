@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Background Music with Popup</title>
+<style>
+  .popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 9999;
+  }
+  .overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9998;
+  }
+</style>
+</head>
+<body>
+
+<div class="popup" id="popup">
+  <p>Do you want to play background music?</p>
+  <button onclick="startMusic()">Yes</button>
+  <button onclick="hidePopup()">No</button>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<audio id="backgroundMusic" loop>
+  <source src="b.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<script>
+  var popup = document.getElementById('popup');
+  var overlay = document.getElementById('overlay');
+  var backgroundMusic = document.getElementById('backgroundMusic');
+  var timeout;
+
+  // Show popup when the page loads
+  window.onload = function() {
+    popup.style.display = 'block';
+    overlay.style.display = 'block';
+    // Set a timeout to hide the popup after 3 seconds if the user doesn't respond
+    timeout = setTimeout(function() {
+      hidePopup();
+      startMusic();
+    }, 3000);
+  };
+
+  // Function to start playing background music
+  function startMusic() {
+    backgroundMusic.play();
+    hidePopup();
+  }
+
+  // Function to hide the popup
+  function hidePopup() {
+    popup.style.display = 'none';
+    overlay.style.display = 'none';
+    clearTimeout(timeout); // Clear the timeout
+  }
+</script>
+
+</body>
+</html>
