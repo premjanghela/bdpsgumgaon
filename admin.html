@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bdps school PJ Developer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-color: #f5f7f6;
+        }
+
+        .header {
+            width: 100%;
+            background-color: #e8e5c3; /* Background color of the header */
+            color: #002263;
+            padding: 5px 0px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1001;
+        }
+
+        .header img {
+            width: 45px; /* Adjust size of the logo */
+            height: 45px;
+            border-radius: 50%; /* Make the logo circular */
+            margin-right: 10px;
+            border: 1px solid white; /* 1px border around the logo */
+        }
+
+        .header h1 {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .menu-btn {
+            font-size: 30px;
+            cursor: pointer;
+            background-color: transparent;
+            color: #000;
+            border: none;
+        }
+
+        .slider-menu {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            background-color: #e8e5c3;
+            color: #002263;
+            transition: 0.3s;
+            z-index: 1000;
+            padding-top: 60px;
+        }
+
+        .slider-menu a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #002263;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .slider-menu a:hover {
+            background-color: #575757;
+            color: #fff;
+        }
+
+        .content {
+            padding: 20px;
+            margin-top: 100px; /* Adjusted to give space below the fixed header */
+        }
+
+        .section {
+            padding: 20px;
+            background-color: white;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #002263;
+            font-size: 24px;
+            margin-top: 0;
+        }
+
+        .section p {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .apply-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #002263;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            margin-top: 10px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .apply-btn:hover {
+            background-color: green;
+        }
+
+        .login-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: white;
+            color: black;
+            text-align: center;
+            border-radius: 5px;
+            margin-top: 10px;
+            text-decoration: none;
+            border: 1px solid #333;
+            cursor: pointer;
+        }
+
+        .login-btn:hover {
+            background-color: red;
+        }
+
+        .add-tokens-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: orange;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+        }
+
+        .add-tokens-btn:hover {
+            background-color: darkorange;
+        }
+
+        /* Disable button styling */
+        .disabled-btn {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <div class="header">
+        <img class="logo" src="img/logo.png" alt="School Logo"> <!-- Replace with your actual logo image file -->
+        <h1>Bhuni Dada Public School</h1>
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    </div>
+
+    <!-- Slider Menu Section -->
+    <div id="sliderMenu" class="slider-menu">
+        <a href="#">Home</a>
+        <a href="#">About Us</a>
+        <a href="#">Admissions</a>
+        <a href="#">Gallery</a>
+        <a href="#">Contact Us</a>
+        <a href="login.html">Login</a>
+        <br><br><br><br><br><br><br>
+        <a href="#">PJ Developer</a>
+    </div>
+
+    <!-- Content Section -->
+    <div class="content">
+        <!-- Tokens Section -->
+        <div class="section">
+            <h2>Tokens</h2>
+            <div id="tokenDisplay" style="margin-bottom: 20px; font-size: 20px;">Tokens: 10</div> <!-- Token Display -->
+            <button class="add-tokens-btn" onclick="addTokens()">Add Tokens</button>
+             <img class="peymentqr"  src="img/payment.png" alt="Academics Image" > <!-- Replace with actual image -->       
+         <style type="text/css">
+            .peymentqr{ 
+                 width:30%; 
+                 border-radius: 10px;
+                 position:absolute;
+                 top:150px;
+                 right:50px;
+            }
+         </style>
+        
+        </div>
+
+        <!-- Teacher Attendance Section -->
+        <div class="section">
+            <h2>Teachers Attendance</h2>
+            
+            <button class="apply-btn" onclick="handleAction(1.5, 'https://form.jotform.com/240322510350438')">Check In</button>
+            <button class="login-btn" onclick="handleAction(1.5, 'https://form.jotform.com/242237985731464')">Check Out</button>
+        </div>
+
+        <!-- Staff Salary Section -->
+        <div class="section">
+            <h2>Staff Salary</h2>
+            
+            <button class="apply-btn" onclick="handleAction(5, 'https://form.jotform.com/240511081934045')">Pay Salary</button>
+            <button class="login-btn">More..</button>
+        </div>
+
+        <!-- Student Details Section -->
+        <div class="section">
+            <h2>Student Details</h2>
+            <img src="img/3.png" alt="Academics Image" style="width:100%; border-radius: 10px;"> <!-- Replace with actual image -->
+        </div>
+    </div>
+  
+    <script>
+        // Initialize or get the token count from localStorage
+        let tokens = localStorage.getItem('tokens') ? parseInt(localStorage.getItem('tokens')) : 10;
+
+        // Used codes stored in localStorage
+        let usedCodes = JSON.parse(localStorage.getItem('usedCodes')) || [];
+
+        // Update the token display
+        function updateTokenDisplay() {
+            document.getElementById('tokenDisplay').textContent = 'Tokens: ' + tokens;
+        }
+
+        // Handle action and redirect if tokens are sufficient
+        function handleAction(amount, url) {
+            if (tokens >= amount) {
+                tokens -= amount;
+                localStorage.setItem('tokens', tokens);  // Store the updated token count in localStorage
+                updateTokenDisplay();
+                window.location.href = url;  // Redirect to the specified URL
+            } else {
+                alert('No tokens!');
+            }
+        }
+
+        // Add tokens based on correct code
+        function addTokens() {
+            let code = prompt("Enter code to add tokens:");
+            if (usedCodes.includes(code)) {
+                alert("Used code!");
+                return;
+            }
+
+            if (code === "2005") {
+                tokens += 15;
+                usedCodes.push(code);
+                alert("Correct code! 10 tokens added.");
+            } 
+            
+            
+            else if (code === "1204") {
+                tokens += 10;
+                usedCodes.push(code);
+                alert("Correct code! 15 tokens added.");
+            }
+             
+             
+             
+        else if (code === "145631" || code === "258962" || code === "423156" || code === "553441" ||
+        code === "692204" || code === "830966" || code === "969729" || code === "123145" ||
+        code === "234558" || code === "321543" || code === "424813" || code === "524012" ||
+        code === "623211" || code === "722410" || code === "821609" || code === "920808" ||
+        code === "145266" || code === "123458" || code === "123489" || code === "108961" ||
+        code === "104139" || code === "142536" || code === "155236" || code === "159469" ||
+        code === "165819" || code === "172169" || code === "178519" || code === "184869" ||
+        code === "191219" || code === "197569" || code === "203919" || code === "210269" ||
+        code === "216619" || code === "222969" || code === "229319" || code === "235669" ||
+        code === "242019" || code === "248369" || code === "254719" || code === "261069" ||
+        code === "267419" || code === "273769" || code === "280119" || code === "286469" ||
+        code === "292819" || code === "299169" || code === "305519" || code === "311869" ||
+        code === "318219") {
+        tokens += 98;
+        usedCodes.push(code);
+        alert("Correct code! 98 tokens added.");
+        }
+             
+             else {
+                alert("Wrong code!");
+                return;
+            }
+            localStorage.setItem('tokens', tokens);  // Store the updated token count in localStorage
+            localStorage.setItem('usedCodes', JSON.stringify(usedCodes));  // Store the used code in localStorage
+            updateTokenDisplay();
+        }
+
+        // Toggle the slider menu
+        function toggleMenu() {
+            var menu = document.getElementById("sliderMenu");
+            if (menu.style.left === "0px") {
+                menu.style.left = "-250px";
+            } else {
+                menu.style.left = "0px";
+            }
+        }
+
+        // Update the token display on page load
+        updateTokenDisplay();
+    </script>
+
+</body>
+  </html>
+  
