@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Fee Receipt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .receipt-container {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            border: none;
+            border-radius: 0;
+        }
+        .header, .footer {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header img {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+        }
+        .details, .fee-details {
+            margin: 20px;
+        }
+        .details p, .fee-details p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+        .details span, .fee-details span {
+            font-weight: bold;
+        }
+        .footer {
+            margin-top: 30px;
+        }
+        .footer p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+        @media print {
+            @page {
+                margin: 0;
+            }
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            .receipt-container {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                border: none;
+                border-radius: 0;
+            }
+            .form-container {
+                display: none;
+            }
+        }
+        .form-container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 4px 0;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Student Fee Receipt Form</h2>
+    
+    <div class="form-group">
+        <label for="studentName">Student Name:</label>
+        <input type="text" id="studentName" name="studentName" placeholder="Enter student name" value="Prem Janghela" onchange="updateReceipt()">
+    </div>
+
+    <div class="form-group">
+        <label for="rollNumber">Roll Number:</label>
+        <input type="text" id="rollNumber" name="rollNumber" placeholder="Enter roll number" value="2201110035" onchange="updateReceipt()">
+    </div>
+
+    <div class="form-group">
+        <label for="semester">Semester:</label>
+        <input type="text" id="semester" name="semester" placeholder="Enter semester" value="3" onchange="updateReceipt()">
+    </div>
+
+    <div class="form-group">
+        <label for="course">Course:</label>
+        <input type="text" id="course" name="course" placeholder="Enter course" value="D. Pharma" onchange="updateReceipt()">
+    </div>
+
+    <div class="form-group">
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount" placeholder="Enter amount" value="5500" onchange="updateReceipt()">
+    </div>
+
+    <div class="form-group">
+        <label for="paymentDate">Payment Date:</label>
+        <input type="date" id="paymentDate" name="paymentDate" value="2024-08-23" onchange="updateReceipt()">
+    </div>
+
+    <button onclick="window.print()">Print Receipt</button>
+</div>
+
+<div class="receipt-container">
+    <div class="header">
+        <img src="https://i.postimg.cc/28cxR8jH/School-Letter-Pad-BDPS-Gumgaon-docx-1.png" alt="Institution Header">
+    </div>
+
+    <div class="details">
+        <p><span>Student Name:</span> <span id="receiptName">Prem Janghela</span></p>
+        <p><span>Roll Number:</span> <span id="receiptRollNumber">2201110035</span></p>
+        <p><span>Semester:</span> <span id="receiptSemester">3</span></p>
+        <p><span>Course:</span> <span id="receiptCourse">D. Pharma</span></p>
+    </div>
+
+    <div class="fee-details">
+        <p><span>Amount Paid:</span> ₹<span id="receiptAmount">5500</span></p>
+        <p><span>Payment Date:</span> <span id="receiptPaymentDate">2024-08-23</span></p>
+    </div>
+
+    <div class="footer">
+        <p>Signature of the Authorised Person</p>
+    </div>
+</div>
+
+<script>
+    function updateReceipt() {
+        document.getElementById('receiptName').innerText = document.getElementById('studentName').value;
+        document.getElementById('receiptRollNumber').innerText = document.getElementById('rollNumber').value;
+        document.getElementById('receiptSemester').innerText = document.getElementById('semester').value;
+        document.getElementById('receiptCourse').innerText = document.getElementById('course').value;
+        document.getElementById('receiptAmount').innerText = document.getElementById('amount').value;
+        document.getElementById('receiptPaymentDate').innerText = document.getElementById('paymentDate').value;
+    }
+</script>
+
+</body>
+</html>
