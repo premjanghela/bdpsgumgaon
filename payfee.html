@@ -115,13 +115,27 @@
     </div>
 
     <div class="form-group">
-        <label for="semester">Semester:</label>
-        <input type="text" id="semester" name="semester" placeholder="Enter semester" value="3" onchange="updateReceipt()">
+        <label for="class">Class:</label>
+        <select id="class" name="class" onchange="updateReceipt()">
+            <option value="1">1st</option>
+            <option value="2">2nd</option>
+            <option value="3" selected>3rd</option>
+            <option value="4">4th</option>
+            <option value="5">5th</option>
+            <option value="6">6th</option>
+            <option value="7">7th</option>
+            <option value="8">8th</option>
+        </select>
     </div>
 
     <div class="form-group">
-        <label for="course">Course:</label>
-        <input type="text" id="course" name="course" placeholder="Enter course" value="D. Pharma" onchange="updateReceipt()">
+        <label for="paymentMode">Payment Mode:</label>
+        <select id="paymentMode" name="paymentMode" onchange="updateReceipt()">
+            <option value="PhonePe">PhonePe</option>
+            <option value="Google Pay">Google Pay</option>
+            <option value="Paytm">Paytm</option>
+            <option value="Cash" selected>Cash</option>
+        </select>
     </div>
 
     <div class="form-group">
@@ -145,8 +159,8 @@
     <div class="details">
         <p><span>Student Name:</span> <span id="receiptName">Prem Janghela</span></p>
         <p><span>Roll Number:</span> <span id="receiptRollNumber">2201110035</span></p>
-        <p><span>Semester:</span> <span id="receiptSemester">3</span></p>
-        <p><span>Course:</span> <span id="receiptCourse">D. Pharma</span></p>
+        <p><span>Class:</span> <span id="receiptClass">3rd</span></p>
+        <p><span>Payment Mode:</span> <span id="receiptPaymentMode">Cash</span></p>
     </div>
 
     <div class="fee-details">
@@ -163,8 +177,8 @@
     function updateReceipt() {
         document.getElementById('receiptName').innerText = document.getElementById('studentName').value;
         document.getElementById('receiptRollNumber').innerText = document.getElementById('rollNumber').value;
-        document.getElementById('receiptSemester').innerText = document.getElementById('semester').value;
-        document.getElementById('receiptCourse').innerText = document.getElementById('course').value;
+        document.getElementById('receiptClass').innerText = document.getElementById('class').value + 'th';
+        document.getElementById('receiptPaymentMode').innerText = document.getElementById('paymentMode').value;
         document.getElementById('receiptAmount').innerText = document.getElementById('amount').value;
         document.getElementById('receiptPaymentDate').innerText = document.getElementById('paymentDate').value;
     }
