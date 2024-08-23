@@ -9,7 +9,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f9f9f9;
         }
         .receipt-container {
             width: 100%;
@@ -17,7 +17,8 @@
             padding: 0;
             background-color: white;
             border: none;
-            border-radius: 0;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .header, .footer {
             text-align: center;
@@ -27,12 +28,13 @@
             width: 100%;
             max-width: 100%;
             height: auto;
+            display: none; /* Hide image on screen */
         }
         .details, .fee-details {
             margin: 20px;
         }
         .details p, .fee-details p {
-            margin: 5px 0;
+            margin: 8px 0;
             font-size: 16px;
         }
         .details span, .fee-details span {
@@ -54,11 +56,12 @@
                 padding: 0;
             }
             .receipt-container {
-                width: 100%;
-                margin: 0;
-                padding: 0;
                 border: none;
                 border-radius: 0;
+                box-shadow: none;
+            }
+            .header img {
+                display: block; /* Show image when printing */
             }
             .form-container {
                 display: none;
@@ -68,9 +71,10 @@
             width: 80%;
             margin: 20px auto;
             padding: 20px;
-            background-color: #f9f9f9;
+            background-color: #ffffff;
             border: 1px solid #ddd;
             border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .form-group {
             margin-bottom: 15px;
@@ -82,9 +86,11 @@
         }
         input, select {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             margin: 4px 0;
             box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
         button {
             background-color: #4CAF50;
