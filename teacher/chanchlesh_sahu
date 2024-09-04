@@ -211,7 +211,7 @@
 </div>
 
 <script>
-    const url = 'https://script.google.com/macros/s/AKfycbx_D292cMO_65ErdNlckg0fsU8nHwYd9KvxQv18Je8GT4xsk7eAtcYO34cq85NV4IUysA/exec';
+    const url = 'https://script.google.com/macros/s/AKfycby8P0ApyOcYrxZlbiCOwWwcJ0LyPsZyemJl9NfxW4RTno3axOhoXY8epRvH-uJ0O9Tgww/exec';
     
     const spinnerContainer = document.getElementById('spinner-container');
     const content = document.getElementById('content');
