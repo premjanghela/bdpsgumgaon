@@ -1,0 +1,364 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Profile</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #34495e;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #ecf0f1;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            border-bottom: 3px solid #1abc9c;
+            padding-bottom: 8px;
+            color: #1abc9c;
+        }
+        .section p {
+            background: #34495e;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 5px 0;
+            border: 1px solid #1abc9c;
+        }
+        .section p strong {
+            color: #1abc9c;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: #2c3e50;
+            color: #ecf0f1;
+        }
+        table, th, td {
+            border: 1px solid #1abc9c;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #16a085;
+            color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        td {
+            background: #34495e;
+        }
+        .scrollable {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .spinner-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #1abc9c;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .spinner-text {
+            margin-top: 10px;
+            font-size: 20px;
+            color: #ecf0f1;
+        }
+        .hidden {
+            display: none;
+        }
+        
+        .photo{
+             width:150px;
+             border: 2px #fff;
+             border-radius:50%;
+             border-color:blue;
+        }
+    </style>
+</head>
+<body>
+
+<div class="spinner-container" id="spinner-container">
+    <div class="spinner"></div>
+    <br>
+    <h6 class="spinner-text"> Wellcome Teacher's</h6>
+    <br><br><br><br>
+    <h6 class="spinner-text"> Developer : Prem Janghela</h6>
+</div>
+
+<div class="container hidden" id="content">
+    
+    <center>
+            <img class="photo"  src="https://i.postimg.cc/8cmkD925/20240831-080709.jpg" alt="Developer : Prem Janghela" >
+    
+    
+    </center>
+    
+    
+    <h1 id="teacher-name">फिर से कोशिश करे टीचर जी, एक बार इंटरनेट कनेक्शन चेक करे।</h1>
+
+    <div class="section" id="personal-info">
+        <h2>Personal Information</h2>
+        <p><strong>Name:</strong> <span id="name"></span></p>
+        <p><strong>Post:</strong> <span id="post"></span></p>
+        <p><strong>Date of Birth:</strong> <span id="dob"></span></p>
+        <p><strong>Gender:</strong> <span id="gender"></span></p>
+        <p><strong>Address:</strong> <span id="address"></span></p>
+        <p><strong>Contact Number:</strong> <span id="contact"></span></p>
+        <p><strong>Email:</strong> <span id="email"></span></p>
+        <p><strong>Educational Qualification:</strong> <span id="qualification"></span></p>
+    </div>
+
+    <div class="section" id="total-salary">
+        <h2>Total Salary Detail</h2>
+        <div class="scrollable">
+            <table>
+                <tbody>
+                    <tr>
+                        <td><strong>Total Days:</strong></td>
+                        <td id="total-days"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Earning:</strong></td>
+                        <td id="earning"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total Paid:</strong></td>
+                        <td id="total-paid"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pending:</strong></td>
+                        <td id="pending"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section" id="salary-transaction">
+        <h2>Salary Transaction Detail</h2>
+        <div class="scrollable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Send Mode</th>
+                        <th>Paid By</th>
+                        <th>Received</th>
+                    </tr>
+                </thead>
+                <tbody id="salary-transaction-body"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section" id="monthly-salary">
+        <h2>Monthly Salary Detail</h2>
+        <div class="scrollable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Present</th>
+                        <th>Absent</th>
+                        <th>Holiday</th>
+                        <th>Monthly Salary</th>
+                        <th>Total Earn</th>
+                        <th>Paid</th>
+                        <th>Pending</th>
+                    </tr>
+                </thead>
+                <tbody id="monthly-salary-body"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    const url = 'https://script.google.com/macros/s/AKfycbwTcPEkrpdA680Jjtive0fYN3HGyhKoMfUubnvCsl0fxG5BXFBGaA44kZYOC588EtJp/exec';
+	
+    
+    const spinnerContainer = document.getElementById('spinner-container');
+    const content = document.getElementById('content');
+
+    // Show spinner and text
+    setTimeout(() => {
+        spinnerContainer.style.display = 'none'; // Hide spinner after 5 seconds
+        content.classList.remove('hidden'); // Show content
+    }, 5000);
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            // Show content
+  
+            
+            
+            // Get the element where you want to insert the image
+            const teacherNameElement = document.getElementById('teacher-name');
+            
+            // Create the image element
+            const image = document.createElement('img');
+            image.src = 'https://i.postimg.cc/3NtMthMg/20240831-081315.png';
+            image.style.width = '18x';  // Set the width to 30px
+            image.style.height = '18px'; // Set the height to 30px
+            
+            // Set the text content including the image
+            teacherNameElement.innerHTML = data.personalInfo.name + ' ';
+            
+            // Append the image to the element
+            teacherNameElement.appendChild(image);
+            
+            
+            
+            
+            
+            document.getElementById('name').textContent = data.personalInfo.name;
+            document.getElementById('post').textContent = data.personalInfo.post;
+            document.getElementById('dob').textContent = data.personalInfo.dob;
+            document.getElementById('gender').textContent = data.personalInfo.gender;
+            document.getElementById('address').textContent = data.personalInfo.address;
+            document.getElementById('contact').textContent = data.personalInfo.contact;
+            document.getElementById('email').textContent = data.personalInfo.email;
+            document.getElementById('qualification').textContent = data.personalInfo.qualification;
+
+            document.getElementById('total-days').textContent = data.totalSalary.totalDays;
+            document.getElementById('earning').textContent = data.totalSalary.earning;
+            document.getElementById('total-paid').textContent = data.totalSalary.totalPaid;
+            document.getElementById('pending').textContent = data.totalSalary.pending;
+
+            const salaryTransactionBody = document.getElementById('salary-transaction-body');
+            data.salaryTransaction.forEach(transaction => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${transaction.date}</td>
+                    <td>${transaction.amount}</td>
+                    <td>${transaction.mode}</td>
+                    <td>${transaction.paidBy}</td>
+                    <td>${transaction.received}</td>
+                `;
+                salaryTransactionBody.appendChild(row);
+            });
+
+            const monthlySalaryBody = document.getElementById('monthly-salary-body');
+            data.monthlySalary.forEach(salary => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${salary.month}</td>
+                    <td>${salary.present}</td>
+                    <td>${salary.absent}</td>
+                    <td>${salary.holiday}</td>
+                    <td>${salary.monthlySalary}</td>
+                    <td>${salary.totalEarn}</td>
+                    <td>${salary.paid}</td>
+                    <td>${salary.pending}</td>
+                `;
+                monthlySalaryBody.appendChild(row);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            document.getElementById('spinner').style.display = 'none'; // Hide spinner if there's an error
+        });
+</script>
+
+</body>
+</html>
+
+
+
+
+<!---
+ goigle sheet  code.gs
+ 
+ 
+ function doGet() {
+ const ss = SpreadsheetApp.getActiveSpreadsheet();
+ const sheet = ss.getSheetByName('prem_janghela'); // Change 'Sheet1' to the actual sheet name
+ 
+ const data = sheet.getDataRange().getValues();
+ const output = {
+ personalInfo: {
+ name: data[3][1],
+ post: data[4][1],
+ dob: data[5][1],
+ gender: data[6][1],
+ address: data[7][1],
+ contact: data[8][1],
+ email: data[9][1],
+ qualification: data[10][1]
+ },
+ totalSalary: {
+ totalDays: data[1][0],
+ earning: data[1][1],
+ totalPaid: data[1][2],
+ pending: data[1][3]
+ },
+ salaryTransaction: data.slice(1, 51).map(row => ({
+ date: row[5],
+ amount: row[6],
+ mode: row[7],
+ paidBy: row[8],
+ received: row[9]
+ })),
+ monthlySalary: data.slice(1, 101).map(row => ({
+ month: row[11],
+ present: row[12],
+ absent: row[13],
+ holiday: row[14],
+ monthlySalary: row[15],
+ totalEarn: row[16],
+ paid: row[17],
+ pending: row[18]
+ }))
+ };
+ return ContentService.createTextOutput(JSON.stringify(output)).setMimeType(ContentService.MimeType.JSON);
+ }
+ 
+
+
+
+
+
+
+
+
+-->
+
+
