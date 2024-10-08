@@ -1,0 +1,371 @@
+
+
+
+<!---Main body satart------------->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> BDPS Gumgaon Management Dashboard : PJ Developer</title>
+    <!-- Google Fonts -->
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <script src="https://premjanghela.github.io/pj/branding/spinners.js"></script>
+    <!-- CSS Styling -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #cccccc;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Royal Color Variables */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #8e44ad;
+            --highlight-color: #f39c12;
+            --card-bg: linear-gradient(145deg, #34495e, #2c3e50);
+            --card-shadow: rgba(0, 0, 0, 0.3);
+            --text-color: #ecf0f1;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: var(--primary-color);
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 2px 0 5px var(--card-shadow);
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li {
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            animation: colorChange 6s infinite ease-in-out;
+        }
+
+        .sidebar ul li:hover {
+            background-color: var(--highlight-color);
+            transform: scale(1.05);
+        }
+
+        .sidebar ul li i {
+            margin-right: 10px;
+        }
+
+        .sidebar ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .content {
+            margin-left: 270px;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .content h1 {
+            font-size: 32px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            
+        }
+
+        /* Section-based layout */
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            font-size: 28px;
+            color: var(--secondary-color);
+            margin-bottom: 2px;
+            border-bottom: 2px solid var(--highlight-color);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 columns layout */
+            grid-gap: 15px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 6px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: 0.3s;
+            color: var(--text-color);
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 12px var(--card-shadow);
+        }
+
+        .card i {
+            font-size: 28px;
+            color: var(--highlight-color);
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 22px;
+        }
+
+
+
+        /* Animations */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes colorChange {
+            0%, 40% {
+                background-color: var(--secondary-color);
+            }
+            0% {
+                background-color: var(--highlight-color);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .content {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card h3 {
+                font-size: 14px;
+            }
+
+            .card i {
+                font-size: 30px;
+            }
+
+            .content h1 {
+                font-size: 24px;
+            }
+            
+            .iframe{
+               width:100%;
+            }
+        }
+        
+        .outinbutton1{
+              padding:2px 20px;
+              font-weight:bold;        
+              border-radius:50px;
+              color:white;
+              background-color:green;
+              border: 2px solid white;
+        }
+            .outinbutton1:hover{
+               background-color:yellow;
+            }
+        .outinbutton2{
+              padding:2px 15px;
+              font-weight:bold;
+              border-radius:50px;
+              color:white;
+              background-color:red;
+              border: 2px solid white;
+              margin-left: 6px;
+        }
+        .outinbutton2:hover {
+              background-color:yellow;
+        }
+        .logo{
+           width:100%;
+           border-radius:18px;
+        }
+    </style>
+</head>
+<body>
+
+
+    <!-- Main Content -->
+    <div class="content">
+      <center>   <img class="logo" src="https://i.postimg.cc/qMRcgmKz/20241007-225415.png"></center>
+  <br>    <center>  <h1>Manegement 2024-25</h1></center>
+
+        <!-- Section 1: Overview -->
+        <div class="section">
+            <div class="card-container">
+            <div class="card">
+                <i class="fas fa-wallet"></i>
+                <center><h3>Student Pending Fee</h3></center>
+                <p>₹0,000</p>
+            </div>
+            
+            <div class="card">
+                <i class="fas fa-wallet"></i>
+               <center><h3>Student Paid Fee</h3></center>
+                <p>₹0,000</p>
+            </div>           
+                 
+                <div class="card">
+                    <i class="fas fa-user-graduate"></i>
+                    <h3>Total Students</h3>
+                    <p>130</p>
+                </div>
+
+                <div class="card">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <h3>Total Teachers</h3>
+                    <p>19</p>
+                </div>
+                
+     
+              <div class="card">
+              <i class="fas fa-chalkboard-teacher"></i>
+            <center>  <h3>Teachers Attandance</h3></center>
+              <p> <a href="https://form.jotform.com/242781481328461" ><button class="outinbutton1">In</button></a><a href="https://form.jotform.com/242237985731464" ><button class="outinbutton2" >Out</button></a> </p>
+              </div>
+              
+              
+              <div class="card">
+              <i class="fas fa-id-card"></i>
+              <h3>Admit Card</h3>            
+              
+              <select class="classlist"  name="AdmitCard" id="AdmitCard">
+              <option value="index.html">Generate</option>       
+              <option value="index.html">Nursery</option>
+              <option value="saab">LKG/UKG</option>
+              <option value="">1st</option>
+              <option value="">2nd</option>
+              <option value="">3rd</option>
+              <option value="">4th</option>
+              <option value="">5th</option>
+              <option value="">6th</option>
+              <option value="">7th</option>
+              <option value="">8th</option>
+              
+              </select>
+              </div>
+              
+              
+              <div class="card">
+                  <i class="far fa-id-card"></i>
+                  <h3>Teachers Profile</h3>
+                  <p>13</p>
+              </div>
+
+              <div class="card">
+                  <i class="fas fa-school"></i>
+                  <h3>Admission</h3>
+                  <p>Apply Now</p>
+              </div>
+
+              <div class="card">
+                  <i class="fab fa-bitcoin"></i>
+                  <center><h3>Pending Salary : Prem Janghela</h3></center>
+                  <p>₹8,000</p>
+              </div>  
+                       
+              <div class="card">
+                   <i class="fas fa-donate"></i>
+                  <center><h3>Pay Teacher Salary</h3></center>
+                   <p>Pay Now</p>
+              </div>           
+            
+          <div class="card">
+             <i class="fas fa-file-alt"></i>
+              <center><h3>Salary Report</h3></center>
+              <p>See Report </p>
+          </div>           
+          
+          <div class="card">
+          <i class="fas fa-bug"></i>
+          <center><h3>Software Bug</h3></center>
+          <p>Oooh..!</p>
+          </div>           
+          
+          
+          </div>
+      </div>
+  </div>
+
+<div class="content" >
+ <div class="section" >
+   
+       <iframe src="https://example.com" class="iframe" ></iframe>
+   
+  
+ </div></div>
+
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <ul>
+            <li><i class="fas fa-user-graduate"></i><a href="#">Students</a></li>
+            <li><i class="fas fa-chalkboard-teacher"></i><a href="#">Teachers</a></li>       
+            <li><i class="fas fa-calendar-alt"></i><a href="#">Attendance</a></li>
+            <li><i class="fas fa-file-alt"></i><a href="#">Exams & Results</a></li>
+            <li><i class="fas fa-book"></i><a href="#">Library</a></li>
+            <li><i class="fas fa-bus"></i><a href="#">Transport</a></li>
+            <li><i class="fas fa-wallet"></i><a href="#">Fees</a></li>
+            <li><i class="fas fa-cog"></i><a href="#">Settings</a></li>
+
+
+
+        </ul>
+    </div>
+
+</body>
+</html>
+
+
+
+
