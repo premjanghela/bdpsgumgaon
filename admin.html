@@ -11,6 +11,9 @@
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <script src="https://premjanghela.github.io/pj/branding/spinners.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <!-- CSS Styling -->
     <style>
         * {
@@ -313,41 +316,40 @@
   </select>
 </div>
 
-<script>
-  function redirectPage() {
-    var selectedValue = document.getElementById("AdmitCard").value;
-    if (selectedValue) {
-      window.location.href = selectedValue; // Selected option value me redirect kare
-    }
-  }
-</script>
               
 
 <!-------------Teacher-Zone------------------------------------------------------------------------------>
 
 <div class="card">
   <i class="fas fa-user-injured"></i>
-  <h3>Teacher Zone</h3>
-
-  <select class="classlist" name="teacheZone" id="teacheZone" onchange="redirectPage()">
-    <option value="">Select</option>
-        <option value="admin/TeacherSalaryReport.html">Teacher Salary Report</option>
-      <option value="admin/teachermonthlyattendance.html">Teacher Monthly Attendance</option>
-
-
-  </select>
+  <div class="dropdown">
+    <button  type="button" data-toggle="dropdown">Select
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li><a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSTVQRW1TzukAZ8pNDvzIVh-DNtHUOe7mYo0Y473L5u0ahfOyVosMj9HbgA7Bc3ezmmC7IwCcFRo4F8/pubhtml?gid=1068523308&single=true">Teacher Salary Report</a></li>
+      <li><a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSTVQRW1TzukAZ8pNDvzIVh-DNtHUOe7mYo0Y473L5u0ahfOyVosMj9HbgA7Bc3ezmmC7IwCcFRo4F8/pubhtml?gid=152334214&single=true">Teachers Profile</a></li>
+      <li><a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSTVQRW1TzukAZ8pNDvzIVh-DNtHUOe7mYo0Y473L5u0ahfOyVosMj9HbgA7Bc3ezmmC7IwCcFRo4F8/pubhtml?gid=396589536&single=true">Teacher Monthly Attendance</a></li>
+      
+    </ul>
+  
 </div>
 
-<script>
-  function redirectPage() {
-    var selectedValue = document.getElementById("teacheZone").value;
-    if (selectedValue) {
-      window.location.href = selectedValue; // Selected option value me redirect kare
-    }
-  }
-</script>
 
 
+
+<div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li><a href="#">HTML</a></li>
+      <li><a href="#">CSS</a></li>
+      <li><a href="#">JavaScript</a></li>
+    </ul>
+
+
+
+
+                
 <!-------------Student-Zone------------------------------------------------------------------------------>
 <div class="card">
   <i class="fas fa-user-graduate"></i>
@@ -359,16 +361,6 @@
       
   </select>
 </div>
-
-<script>
-  function redirectPage() {
-    var selectedValue = document.getElementById("studentZone").value;
-    if (selectedValue) {
-      window.location.href = selectedValue; // Selected option value me redirect kare
-    }
-  }
-</script>
-
 
 
 
