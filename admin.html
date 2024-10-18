@@ -326,21 +326,21 @@
 <!-------------Teacher-Zone------------------------------------------------------------------------------>
 
 <div class="card">
-  <i class="fas fa-id-user"></i>
+  <i class="fas fa-user-injured"></i>
   <h3>Teacher Zone</h3>
 
-  <select class="classlist" name="AdmitCard" id="AdmitCard" onchange="redirectPage()">
+  <select class="classlist" name="teacheZone" id="teacheZone" onchange="redirectPage()">
     <option value="">Select</option>
         <option value="admin/TeacherSalaryReport.html">Teacher Salary Report</option>
       <option value="admin/teachermonthlyattendance.html">Teacher Monthly Attendance</option>
 
-      Teacher Salary Report
+
   </select>
 </div>
 
 <script>
   function redirectPage() {
-    var selectedValue = document.getElementById("AdmitCard").value;
+    var selectedValue = document.getElementById("teacheZone").value;
     if (selectedValue) {
       window.location.href = selectedValue; // Selected option value me redirect kare
     }
@@ -348,12 +348,12 @@
 </script>
 
 
-
+<!-------------Student-Zone------------------------------------------------------------------------------>
 <div class="card">
-  <i class="fas fa-id-user"></i>
+  <i class="fas fa-user-graduate"></i>
   <h3>Student Zone</h3>
 
-  <select class="classlist" name="AdmitCard" id="AdmitCard" onchange="redirectPage()">
+  <select class="classlist" name="studentZone" id="studentZone" onchange="redirectPage()">
     <option value="">Select</option>
     <option value="admin/teachermonthlyattendance.html">Teacher Monthly Attendance</option>
       
@@ -362,7 +362,7 @@
 
 <script>
   function redirectPage() {
-    var selectedValue = document.getElementById("AdmitCard").value;
+    var selectedValue = document.getElementById("studentZone").value;
     if (selectedValue) {
       window.location.href = selectedValue; // Selected option value me redirect kare
     }
