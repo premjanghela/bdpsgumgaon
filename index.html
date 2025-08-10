@@ -1,0 +1,185 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Landing</title>
+  <!-- SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    body{font-family:system-ui,Segoe UI,Roboto,Arial;display:flex;align-items:center;justify-content:center;height:100vh;background:#0f172a;color:#e6eef8}
+    .card{background:#0b1220;padding:24px;border-radius:12px;box-shadow:0 8px 30px rgba(2,6,23,0.6);width:360px}
+    label{display:block;margin-top:10px;font-size:14px}
+    input{width:100%;padding:10px;margin-top:6px;border-radius:8px;border:1px solid #233042;background:#071126;color:inherit}
+    button{margin-top:16px;padding:10px 14px;border-radius:8px;border:none;background:#0ea5a4;color:#062021;font-weight:600;cursor:pointer}
+    small{opacity:0.8}
+  </style>
+</head>
+<body>
+  <div class="card" id="formCard" style="display:none">
+    <h3>Welcome — please enter details</h3>
+    <label for="name">Name</label>
+    <input id="name" autocomplete="name" />
+    <label for="phone">Phone</label>
+    <input id="phone" inputmode="tel" autocomplete="tel" />
+    <button id="submitBtn">Submit & Continue</button>
+
+  </div><script>
+// ====== CONFIG - Replace these ======
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzzOLSKwbwADCBtzJQy_riT0fVA99pGBPeI0lsF4VPYyTP7asxutbbwUgRwIFDtRg-k/exec'; // <-- replace with your Apps Script web app URL
+const REDIRECT_URL = 'https://bdpsgumgaon.netlify.app';
+const STORAGE_KEY = 'pj_autosubmit_v1';
+const KEEP_DAYS = 30; // keeps data in localStorage for 30 days
+// ====================================
+
+function saveToLocal(data){
+  const payload = {data, ts: Date.now()};
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+}
+function clearLocal(){ localStorage.removeItem(STORAGE_KEY); }
+function readLocal(){
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if(!raw) return null;
+  try{ return JSON.parse(raw);}catch(e){return null}
+}
+function isFresh(ts){
+  const ms = KEEP_DAYS * 24 * 3600 * 1000;
+  return (Date.now() - ts) < ms;
+}
+
+async function postData(payload){
+  // send to Apps Script
+  const resp = await fetch(SCRIPT_URL, {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify(payload)
+  });
+  return resp.json();
+}
+
+function showForm(){
+  document.getElementById('formCard').style.display = 'block';
+}
+
+function showProgressUntil(promise){
+  // Show SweetAlert modal with progress bar and percent that increments while promise resolves
+  return new Promise((resolve,reject)=>{
+    let percent = 0;
+    Swal.fire({
+      title: 'Processing....',
+      html: '<div id="swPercent">0%</div>',
+      didOpen: ()=>{
+        Swal.showLoading();
+        const el = document.getElementById('swPercent');
+        const t = setInterval(()=>{
+          percent = Math.min(95, percent + Math.floor(Math.random()*6)+1);
+          el.innerText = percent + '%';
+        }, 250);
+        promise.then(res=>{
+          clearInterval(t);
+          // finish to 100%
+          el.innerText = '100%';
+          Swal.hideLoading();
+          setTimeout(()=>Swal.close(),400);
+          resolve(res);
+        }).catch(err=>{
+          clearInterval(t);
+          Swal.hideLoading();
+          Swal.fire('Error','Failed to send data','error');
+          reject(err);
+        });
+      },
+      allowOutsideClick:false,
+      allowEscapeKey:false,
+      showConfirmButton:false
+    });
+  });
+}
+
+async function autoSendAndRedirect(dataObj){
+  // dataObj: {name, phone}
+  try{
+    const payload = {name: dataObj.name, phone: dataObj.phone, local_ts: new Date().toISOString()};
+    // Show progress while POST is pending. The server should respond only after writing to Sheet2.
+    const sendPromise = postData(payload);
+    const result = await showProgressUntil(sendPromise);
+    if(result && result.status === 'ok'){
+      // update lastSent timestamp in localStorage
+      saveToLocal({name:dataObj.name, phone:dataObj.phone, sentAt: new Date().toISOString()});
+      // small delay then redirect
+      setTimeout(()=> window.location.href = REDIRECT_URL, 600);
+    }else{
+      Swal.fire('Error','Server did not confirm saving. Try again.','error');
+    }
+  }catch(e){
+    console.error(e);
+    Swal.fire('Error','Network or server error.','error');
+  }
+}
+
+// on page load
+window.addEventListener('DOMContentLoaded', ()=>{
+  const stored = readLocal();
+  if(stored && isFresh(stored.ts) && stored.data && stored.data.name && stored.data.phone){
+    // automatic: send and redirect
+    autoSendAndRedirect(stored.data);
+  }else{
+    // show form
+    showForm();
+  }
+
+  // form submit
+  document.getElementById('submitBtn').addEventListener('click', ()=>{
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    if(!name || !phone){ Swal.fire('Oops','Please enter name and phone','warning'); return; }
+    const data = {name, phone};
+    // save locally for 30 days
+    saveToLocal(data);
+    // send and redirect
+    autoSendAndRedirect(data);
+  });
+
+  // housekeeping: if stored but expired, clear
+  if(stored && !isFresh(stored.ts)){
+    clearLocal();
+  }
+});
+
+</script>
+</body>
+</html>
+
+<!----
+function doPost(e) {
+  try {
+    // Apna spreadsheet ID yaha daalo
+    var ss = SpreadsheetApp.openById('1Gn9oRP_XGR6_M7uxnvi3bctvNy6hwL-XJ9P6OCGtkjc'); 
+    var sheet = ss.getSheetByName('loginTrack'); 
+    
+    if (!sheet) {
+      // Agar Sheet2 nahi hai to bana do
+      sheet = ss.insertSheet('loginTrack');
+      sheet.appendRow(['Name', 'Phone', 'Local Timestamp', 'Server Timestamp']);
+    }
+    
+    var body = JSON.parse(e.postData.contents);
+    var name = body.name || '';
+    var phone = body.phone || '';
+    var local_ts = body.local_ts || '';
+    var now = new Date();
+    
+    // Sheet2 me row add karo
+    sheet.appendRow([name, phone, local_ts, now]);
+    
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'ok' }))
+      .setMimeType(ContentService.MimeType.JSON);
+      
+  } catch (err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'error', message: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
