@@ -1,226 +1,35 @@
-   <!---- <meta http-equiv="refresh" content="0; url=https://bdpsgumgaon.netlify.app">--->
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trollify ERP | School ERP System</title>
-
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Trollify ERP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,Helvetica,sans-serif;
-}
-
-body{
-background:linear-gradient(135deg,#004e92,#000428);
-display:flex;
-justify-content:center;
-align-items:center;
-min-height:100vh;
-padding:20px;
-color:white;
-}
-
-.container{
-width:100%;
-max-width:420px;
-background:rgba(255,255,255,.08);
-backdrop-filter:blur(12px);
-border-radius:20px;
-padding:30px 20px;
-text-align:center;
-box-shadow:0 0 25px rgba(0,0,0,.4);
-animation:fade 1s;
-}
-
-.logo{
-font-size:60px;
-}
-
-h1{
-margin-top:10px;
-font-size:32px;
-}
-
-h3{
-margin-top:5px;
-color:#ffd54f;
-font-weight:normal;
-}
-
-.line{
-width:80px;
-height:4px;
-background:#FFD700;
-margin:18px auto;
-border-radius:50px;
-}
-
-.desc{
-font-size:15px;
-line-height:1.7;
-color:#f2f2f2;
-}
-
-.notice{
-margin-top:20px;
-background:#fff3cd;
-color:#000;
-padding:15px;
-border-radius:12px;
-font-size:14px;
-font-weight:bold;
-}
-
-.btn{
-display:inline-block;
-margin-top:25px;
-padding:18px 35px;
-font-size:20px;
-font-weight:bold;
-text-decoration:none;
-color:white;
-background:linear-gradient(90deg,#00c853,#64dd17);
-border-radius:50px;
-box-shadow:0 0 15px #00ff66;
-animation:pulse 1.2s infinite;
-transition:.3s;
-}
-
-.btn:hover{
-transform:scale(1.08);
-}
-
-.info{
-margin-top:30px;
-text-align:left;
-font-size:14px;
-line-height:1.8;
-background:rgba(255,255,255,.08);
-padding:15px;
-border-radius:15px;
-}
-
-.footer{
-margin-top:25px;
-font-size:13px;
-color:#ddd;
-}
-
-@keyframes pulse{
-0%{
-transform:scale(1);
-box-shadow:0 0 15px #00ff66;
-}
-50%{
-transform:scale(1.08);
-box-shadow:0 0 35px #00ff66;
-}
-100%{
-transform:scale(1);
-box-shadow:0 0 15px #00ff66;
-}
-}
-
-@keyframes fade{
-from{
-opacity:0;
-transform:translateY(20px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
-
-@media(max-width:480px){
-
-.container{
-padding:25px 18px;
-}
-
-h1{
-font-size:28px;
-}
-
-.btn{
-width:100%;
-font-size:18px;
-}
-
-.logo{
-font-size:55px;
-}
-
-}
-</style>
-
-</head>
-
-<body>
-
-<div class="container">
-
-<div class="logo"></div>
-
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
+body{min-height:100vh;padding:30px 15px;background:linear-gradient(-45deg,#edf8ff,#d7ecff,#f7fbff,#fff);background-size:400% 400%;animation:bg 12s ease infinite;overflow-x:hidden;position:relative}
+body:before,body:after{content:"";position:fixed;border-radius:50%;filter:blur(120px);z-index:-1}
+body:before{width:320px;height:320px;background:#76c8ff;left:-100px;top:-100px;opacity:.35}
+body:after{width:320px;height:320px;background:#8e9eff;right:-100px;bottom:-100px;opacity:.3}
+.container{max-width:470px;margin:30px auto;background:rgba(255,255,255,.75);backdrop-filter:blur(18px);padding:35px;border-radius:28px;border:1px solid #fff;box-shadow:0 20px 60px rgba(0,90,255,.12);text-align:center}
+.logo{width:90px;height:90px;border-radius:50%;margin:auto;background:linear-gradient(135deg,#00b4ff,#3b82f6);display:flex;align-items:center;justify-content:center;font-size:42px;color:#fff}
+h1{margin:18px 0 6px;color:#1565ff}.subtitle{color:#6b7b93}
+.line{width:90px;height:5px;background:linear-gradient(90deg,#00b4ff,#7c4dff);margin:20px auto;border-radius:30px}
+.notice{background:#fff8df;border:1px solid #ffe082;padding:18px;border-radius:16px;color:#6d5500;line-height:1.7}
+.btn{display:block;margin-top:16px;padding:16px;border-radius:15px;text-decoration:none;color:#fff;font-weight:600;transition:.3s}
+.new{background:linear-gradient(135deg,#00b4ff,#2979ff)}.old{background:linear-gradient(135deg,#7c4dff,#5c6cff)}
+.btn:hover{transform:translateY(-4px)}
+.info{margin-top:25px;background:#f7fbff;padding:20px;border-radius:16px;text-align:left;line-height:2;color:#50627d}
+.footer{margin-top:20px;color:#7b8794;font-size:13px;text-align:center}
+@keyframes bg{0%{background-position:0 50%}50%{background-position:100% 50%}100%{background-position:0 50%}}
+@media(max-width:500px){.container{padding:24px 18px}h1{font-size:28px}}
+</style></head>
+<body><div class="container">
+<div class="logo">🎓</div>
 <h1>Trollify ERP</h1>
-
-<h3>School ERP Management System</h3>
-
+<div class="subtitle">Modern School ERP Management System</div>
 <div class="line"></div>
-<!---
-<p class="desc">
-Welcome to the School ERP System.<br>
-Manage Students, Teachers, Attendance, Fees, Exams, Reports and much more from one place.
-</p>
----->
-<div class="notice">
-🚧 This website is currently in <b>TESTING MODE</b>.<br><br>
-
-If you face any issue or bug while using the system, please contact the developer immediately.
-</div>
-
-<a class="btn"
-href="https://trollifyerp.netlify.app"
-target="_blank">
- OPEN SCHOOL ERP NEW
-</a>
-   <a class="btn"
-href="https://bdpsgumgaon.netlify.app"
-target="_blank">
- OPEN SCHOOL ERP OLD
-</a>
-
-<div class="info">
-
-<b>Developer</b><br>
-Prem Janghela
-<br><br>
-
-<b>Company</b><br>
-Trollify Infotech
-<br><br>
-
-<b>Mobile</b><br>
-9752776923
-<br><br>
-
-<b>Email</b><br>
-trollifyinfotech@gmail.com
-
-</div>
-
-<div class="footer">
-
-© 2026 Trollify Infotech<br>
-All Rights Reserved.
-
-</div>
-
-</div>
-
-</body>
-</html>
+<div class="notice">🚧 <b>Testing Mode</b><br><br>If you find any issue while using the ERP, please contact the developer.</div>
+<a class="btn new" href="https://trollifyerp.netlify.app" target="_blank">School ERP (New)</a>
+<a class="btn old" href="https://bdpsgumgaon.netlify.app" target="_blank">School ERP (Old)</a>
+<div class="info"><b>Developer</b><br>Prem Janghela<br><br><b>Company</b><br>Trollify Infotech<br><br><b>Mobile</b><br>9752776923<br><br><b>Email</b><br>trollifyinfotech@gmail.com</div>
+<div class="footer">© 2026 Trollify Infotech<br>All Rights Reserved.</div>
+</div></body></html>
